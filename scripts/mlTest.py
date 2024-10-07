@@ -9,7 +9,6 @@ import os
 
 ##################################################
 
-# Load data using pandas
 # List available datasets
 datasets_path = '../datasets'
 available_datasets = [f for f in os.listdir(datasets_path) if f.endswith('.csv')]
