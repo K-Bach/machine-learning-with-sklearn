@@ -20,6 +20,17 @@ for idx, dataset in enumerate(available_datasets):
 dataset_choice = int(input("Enter the number of the dataset you want to use: "))
 chosen_dataset = available_datasets[dataset_choice]
 
+# Let the user choose the split percentage
+while True:
+    try:
+        split_percentage = float(input("Enter the split percentage for the test set (e.g., 0.3 for 30%): "))
+        if 0 < split_percentage < 1:
+            break
+        else:
+            print("Please enter a number between 0 and 1.")
+    except ValueError:
+        print("Invalid input. Please enter a valid number.")
+
 # Load the chosen dataset
 data = pd.read_csv(os.path.join(datasets_path, chosen_dataset))
 
@@ -54,7 +65,7 @@ pipeline = Pipeline(steps=[
 x_train, x_test, y_train, y_test = train_test_split(
     features, 
     labels, 
-    test_size=0.3, 
+    test_size=split_percentage, 
     random_state=0
     )
 # print("Number of 0s in y_test: ", (y_test == 0).sum())
