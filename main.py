@@ -82,12 +82,16 @@ else:
     while True:
         test_dataset_choice = int(input("Enter the dataset you want to use for testing: "))
         if 0 <= test_dataset_choice < available_datasets.__len__():
-            break
+            if test_dataset_choice != dataset_choice:
+                test_data = pd.read_csv(os.path.join(datasets_path, available_datasets[test_dataset_choice]))
+                if list(test_data.columns) == list(features.columns):
+                    break
+                else:
+                    print("The selected test dataset does not have the same features as the training dataset. Please choose a different dataset.")
+            else:
+                print("The test dataset cannot be the same as the training dataset. Please choose a different dataset.")
         else:
             print("Please enter a valid number.")
-
-    chosen_test_dataset = available_datasets[test_dataset_choice]
-    test_data = pd.read_csv(os.path.join(datasets_path, chosen_test_dataset))
 
     print('### Training the model...')
     pipeline.fit(features, class_value)
