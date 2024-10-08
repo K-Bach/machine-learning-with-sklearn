@@ -13,7 +13,7 @@ for idx, classifier in enumerate(available_classifiers):
     print(f"{idx}. {classifier}")
 # Let the user choose a classifier
 while True:
-    classifier_choice = int(input("Enter the classifier you want to use: "))
+    classifier_choice = int(input("Select classifier: "))
     if 0 <= classifier_choice < available_classifiers.__len__():
         break
     else:
@@ -34,7 +34,7 @@ for idx, dataset in enumerate(available_datasets):
 
 # Let the user choose a dataset
 while True:
-    dataset_choice = int(input("Enter the dataset you want to use: "))
+    dataset_choice = int(input("Select dataset: "))
     if 0 <= dataset_choice < available_datasets.__len__():
         break
     else:
@@ -52,7 +52,7 @@ class_value = data.iloc[:, -1]
 pipeline = getPipeline(features, classifier)
 
 while True:
-    split = input("Do you want to split the dataset into training and testing sets? (y/n): ")
+    split = input("Split dataset into training and testing sets? (y/n): ")
     if split.lower() == 'y':
         split_dataset = True
         break
@@ -66,7 +66,7 @@ while True:
 if split_dataset:
     while True:
         try:
-            split_percentage = float(input("Enter the split percentage for the test set (e.g., 0.3 for 30%): "))
+            split_percentage = float(input("Enter split percentage for test set (e.g., 0.3 for 30%): "))
             if 0 < split_percentage < 1:
                 break
             else:
@@ -100,7 +100,7 @@ else:
     for idx, dataset in enumerate(available_datasets):
         print(f"{idx}. {dataset}")
     while True:
-        test_dataset_choice = int(input("Enter the dataset you want to use for testing: "))
+        test_dataset_choice = int(input("Select testing dataset: "))
         if 0 <= test_dataset_choice < available_datasets.__len__():
             if test_dataset_choice != dataset_choice:
                 test_data = pd.read_csv(os.path.join(datasets_path, available_datasets[test_dataset_choice]))
