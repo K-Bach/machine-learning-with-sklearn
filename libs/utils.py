@@ -1,5 +1,4 @@
 import pandas as pd
-from sklearn import svm
 from sklearn.metrics import accuracy_score, confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
@@ -23,7 +22,7 @@ def print_stats_metrics(y_test, y_pred, class_names):
     # cm_df.to_csv(cm_filename)
     # print(f"Confusion matrix saved to {cm_filename}")
 
-def getPipeline(features):
+def getPipeline(features, classifier):
     # Identify the numerical and categorical features
     numerical_features = features.select_dtypes(include=['int64', 'float64']).columns
     categorical_features = features.select_dtypes(include=['object']).columns
@@ -38,6 +37,6 @@ def getPipeline(features):
     # Create a pipeline that preprocesses the data and trains the model
     pipeline = Pipeline(steps=[
         ('preprocessor', preprocessor),
-        ('classifier', svm.SVC())
+        ('classifier', classifier)
     ])
     return pipeline
