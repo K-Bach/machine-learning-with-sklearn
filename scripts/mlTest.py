@@ -17,7 +17,12 @@ for idx, dataset in enumerate(available_datasets):
     print(f"{idx}. {dataset}")
 
 # Let the user choose a dataset
-dataset_choice = int(input("Enter the number of the dataset you want to use: "))
+while True:
+    dataset_choice = int(input("Enter the number of the dataset you want to use: "))
+    if 0 <= dataset_choice <= available_datasets.__len__():
+        break
+    else:
+        print("Please enter a valid number.")
 chosen_dataset = available_datasets[dataset_choice]
 
 # Let the user choose the split percentage
@@ -94,6 +99,7 @@ def print_stats_metrics(y_test, y_pred):
 # Train the model
 pipeline.fit(x_train, y_train)
 # Predict the target values
+# print(x_test)
 y_pred = pipeline.predict(x_test)
 
 print_stats_metrics(y_test, y_pred)
