@@ -6,10 +6,9 @@ import threading
 import time
 
 def packet_handler(packet, packet_data):
-    # Timestamp
-    timestamp = datetime.datetime.fromtimestamp(packet.time).strftime('%Y-%m-%d %H:%M:%S')
 
     # Initialize feature values
+    timestamp = datetime.datetime.fromtimestamp(packet.time).strftime('%Y-%m-%d %H:%M:%S')
     src_ip = packet[0][1].src if packet.haslayer('IP') else None
     dst_ip = packet[0][1].dst if packet.haslayer('IP') else None
     protocol = packet[0][1].proto if packet.haslayer('IP') else None
