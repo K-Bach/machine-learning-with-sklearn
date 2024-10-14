@@ -1,29 +1,40 @@
+import os
 import pandas as pd
 from sklearn import svm
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.linear_model import LogisticRegression
+from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import LabelEncoder
 from sklearn.model_selection import train_test_split
 from libs.utils import print_stats_metrics, getPipeline
-import os
 
 # List available classifiers
-available_classifiers = ['randomforest', 'svc']
+available_classifiers = {
+    'randomforest': RandomForestClassifier,
+    'svc': svm.SVC,
+    'decisiontree': DecisionTreeClassifier,
+    'knn': KNeighborsClassifier,
+    'logisticregression': LogisticRegression,
+    'mlp': MLPClassifier
+}
+
 print("Available classifiers:")
-for idx, classifier in enumerate(available_classifiers):
+for idx, classifier in enumerate(available_classifiers.keys()):
     print(f"{idx}. {classifier}")
+
 # Let the user choose a classifier
 while True:
     classifier_choice = int(input("Select classifier: "))
-    if 0 <= classifier_choice < available_classifiers.__len__():
+    if 0 <= classifier_choice < len(available_classifiers):
         break
     else:
         print("Please enter a valid number.")
 
 # Set the classifier
-if classifier_choice == 0:
-    classifier = RandomForestClassifier()
-elif classifier_choice == 1:
-    classifier = svm.SVC()
+classifier_name = list(available_classifiers.keys())[classifier_choice]
+classifier = available_classifiers[classifier_name]()
 
 # List available datasets
 datasets_path = './datasets'
