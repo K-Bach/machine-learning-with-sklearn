@@ -54,6 +54,7 @@ chosen_dataset = available_datasets[dataset_choice]
 
 # Load the chosen dataset
 data = pd.read_csv(os.path.join(datasets_path, chosen_dataset))
+print(f"Loaded {chosen_dataset} dataset.")
 
 # Separate features and class values
 features = data.iloc[:, :-1]
@@ -61,6 +62,8 @@ class_value = data.iloc[:, -1]
 
 # Create a pipeline
 pipeline = getPipeline(features, classifier)
+print("Pipeline created.")
+split_dataset = True
 
 while True:
     split = input("Split dataset into training and testing sets? (y/n): ")
