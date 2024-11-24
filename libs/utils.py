@@ -22,25 +22,15 @@ def print_stats_metrics(y_test, y_pred, class_names):
     # cm_df.to_csv(cm_filename)
     # print(f"Confusion matrix saved to {cm_filename}")
 
-def getPipeline(features, classifier):
+def getPreprocessor(features):
     # Identify the numerical and categorical features
-    numerical_features = features.select_dtypes(include=['int', 'float']).columns
+    numerical_features = features.select_dtypes(include=['Int64', 'float64']).columns
     categorical_features = features.select_dtypes(include=['object']).columns
-    boolean_features = features.select_dtypes(include=['bool']).columns
-    time_features = features.select_dtypes(include=['datetime']).columns
 
     # Create a preprocessor that will scale numerical and one-hot encode categorical features
     preprocessor = ColumnTransformer(
         transformers=[
             ('num', StandardScaler(), numerical_features),
-            ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features),
-            ('bool', 'passthrough', boolean_features),
-            ('time', 'passthrough', time_features)
+            ('cat', OneHotEncoder(), categorical_features)
         ])
-
-    # Create a pipeline that preprocesses the data and trains the model
-    pipeline = Pipeline(steps=[
-        ('preprocessor', preprocessor),
-        ('classifier', classifier)
-    ])
-    return pipeline
+    return preprocessor
