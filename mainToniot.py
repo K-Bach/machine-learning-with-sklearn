@@ -187,7 +187,7 @@ else:
             print("Please enter a valid number.")
             
     # Drop the chosen column
-    columns_to_drop = [col for col in ['src_ip', 'src_port', 'dst_ip', 'dst_port', drop_column_choice] if col in test_data.columns]
+    columns_to_drop = [col for col in ['ts', 'uid', 'http_referrer', 'src_ip', 'src_port', 'dst_ip', 'dst_port', drop_column_choice] if col in test_data.columns]
     test_data = test_data.drop(columns=columns_to_drop)
     
     # Fill missing values
@@ -207,7 +207,6 @@ else:
     
     # Test the model on the test dataset
     print('### Testing the model...')
-    
     y_pred = model.predict(x_test)
     print_stats_metrics(y_test, y_pred, class_names)
 

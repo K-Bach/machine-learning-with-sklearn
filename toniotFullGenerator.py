@@ -26,6 +26,13 @@ for csv_file in csv_files:
     data = data.drop(columns=[col for col in columns_to_drop if col in data.columns])
     print(f"Dropped columns")
     
+    # Check and replace non-integer values in 'src_bytes' column
+    non_integer_values = data[~data['src_bytes'].apply(lambda x: str(x).isdigit() or str(x) == '-')]['src_bytes']
+    if not non_integer_values.empty:
+        print(f"Non-integer values in {csv_file} 'src_bytes' column:")
+        print(non_integer_values)
+        data['src_bytes'] = data['src_bytes'].apply(lambda x: 0 if not str(x).isdigit() else int(x))
+    
     # Append the DataFrame to the list
     combined_data = pd.concat([combined_data, data], ignore_index=True)
     print(f"Appended data from {csv_file} to the list.")
